@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "USER_ENTITY")
-@Audited
+//@Audited
 public class UserEntity {
 
     @Id @GeneratedValue
@@ -17,7 +17,7 @@ public class UserEntity {
 
     private String userName;
 
-
+    @Audited
     private String password;
 
     public long getId() {
