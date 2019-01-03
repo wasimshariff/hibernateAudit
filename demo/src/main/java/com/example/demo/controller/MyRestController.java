@@ -4,10 +4,7 @@ import com.example.demo.model.UserEntity;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -35,8 +32,15 @@ public class MyRestController {
 
     @RequestMapping(path = "/users", method = RequestMethod.GET)
     public ResponseEntity listUsers() {
-            List<UserEntity> voList = userService.listUsers();
-            return ResponseEntity.ok(voList);
+        List<UserEntity> voList = userService.listUsers();
+        return ResponseEntity.ok(voList);
 
     }
+
+    @RequestMapping(path = "/sendEmail", method = RequestMethod.GET)
+    public ResponseEntity sendEmail(@RequestHeader("emailTo") String emailTo) {
+        userService.sendSimpleMessage(emailTo);
+        return ResponseEntity.ok().build();
+    }
+
 }

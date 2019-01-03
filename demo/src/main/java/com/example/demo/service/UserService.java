@@ -41,7 +41,6 @@ public class UserService {
         try {
             AuditReader audit = AuditReaderFactory.get(factory.createEntityManager());
             testAuditReader(audit);
-            sendSimpleMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,7 +58,7 @@ public class UserService {
         System.out.println(userEntities);
     }
 
-    private void sendSimpleMessage() {
+    public void sendSimpleMessage(String emailTo) {
         String msgText = "<html>As requested by you, we have reset your password to access Arch Insurance Portal. Please " +
                 " find below your temporary password to access the portal. Please change you password upon signing in.<br/><br/>" +
                 " Temporary password - %s <br/><br/>" +
@@ -67,9 +66,8 @@ public class UserService {
         String message = String.format(msgText, RandomStringUtils.randomAlphanumeric(8));
         emailSender.send(mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
-            messageHelper.setFrom("test@gmail.com");
-            messageHelper.setTo("sitara@gmail.com");
-            messageHelper.setSubject("Sample mail subject");
+            messageHelper.setTo(emailTo);
+            messageHelper.setSubject("Your password for Arch Insurance Portal is reset");
             messageHelper.setText(message, true);
         });
 
